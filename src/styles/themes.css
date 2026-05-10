@@ -1,0 +1,68 @@
+/* ── Theme tokens ─────────────────────────────────────── */
+:root[data-theme="light"] {
+  --bg:           #f5f5f4;
+  --bg-surface:   #ffffff;
+  --bg-elevated:  #e7e5e4;
+  --border:       #d6d3d1;
+  --text:         #1c1917;
+  --text-muted:   #78716c;
+  --accent:       #0ea5e9;
+  --accent-hover: #0284c7;
+  --success:      #22c55e;
+  --error:        #ef4444;
+  --font-mono:    'JetBrains Mono', 'Fira Code', monospace;
+  --font-sans:    'Inter', system-ui, sans-serif;
+  --radius:       6px;
+  --shadow:       0 1px 3px rgba(0,0,0,0.12);
+}
+
+:root[data-theme="dark"] {
+  --bg:           #0f0f11;
+  --bg-surface:   #18181b;
+  --bg-elevated:  #27272a;
+  --border:       #3f3f46;
+  --text:         #fafafa;
+  --text-muted:   #a1a1aa;
+  --accent:       #38bdf8;
+  --accent-hover: #7dd3fc;
+  --success:      #4ade80;
+  --error:        #f87171;
+  --font-mono:    'JetBrains Mono', 'Fira Code', monospace;
+  --font-sans:    'Inter', system-ui, sans-serif;
+  --radius:       6px;
+  --shadow:       0 1px 3px rgba(0,0,0,0.4);
+}
+
+/* Alien / Nostromo amber — phosphor CRT aesthetic */
+:root[data-theme="amber"] {
+  --bg:           #050500;
+  --bg-surface:   #0d0d00;
+  --bg-elevated:  #1a1a00;
+  --border:       #4d3800;
+  --text:         #ffb000;
+  --text-muted:   #996600;
+  --accent:       #ffd000;
+  --accent-hover: #ffcc00;
+  --success:      #aaff00;
+  --error:        #ff4400;
+  --font-mono:    'JetBrains Mono', 'Courier New', monospace;
+  --font-sans:    'JetBrains Mono', 'Courier New', monospace;
+  --radius:       2px;
+  --shadow:       0 0 8px rgba(255,176,0,0.15);
+}
+
+/* ── CRT scanline overlay (amber only) ────────────────── */
+:root[data-theme="amber"] body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.08) 2px,
+    rgba(0,0,0,0.08) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}

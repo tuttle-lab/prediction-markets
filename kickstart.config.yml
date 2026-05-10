@@ -1,0 +1,40 @@
+# ── Kickstart project config ───────────────────────────────
+# Edit these values when spinning up a new project, then run:
+#   ./scripts/setup.sh
+
+project:
+  name: prediction-markets
+  github_repo: tuttle-lab/prediction-markets
+
+# ── Deployment strategy ─────────────────────────────────────
+# Choose ONE primary deployment target.
+#
+# VERCEL (recommended for most projects)
+#   ✓ Hosts frontend + FastAPI backend in one deployment
+#   ✓ Single canonical URL for everything
+#   ✓ /docs and /redoc (Swagger) available
+#   ✓ Serverless Python functions, zero infra
+#   ✗ Requires a Vercel account
+#
+# GITHUB PAGES (static-only projects)
+#   ✓ Free, zero account setup beyond GitHub
+#   ✓ Good for pure frontend apps with no backend
+#   ✗ Static only — cannot run FastAPI
+#   ✗ API calls must point to an external URL (Vercel or other)
+#   ✗ /docs and /redoc not available
+#   ✗ Two URLs to manage if used alongside Vercel
+#
+# Recommendation: use Vercel as primary. Keep the GitHub Actions
+# workflow in the repo as a fallback or for static-only forks.
+
+deployment:
+  vercel_production_url: https://prediction-markets.vercel.app
+  github_pages_base_path: /prediction-markets/
+
+# ── Database ────────────────────────────────────────────────
+# Safe to commit: url and anon key are public-facing.
+# Service role key is secret — store in .secrets/supabase.env,
+# setup.sh will read it from there and push it as a GitHub secret.
+database:
+  supabase_url: ""
+  supabase_anon_key: ""

@@ -1,0 +1,100 @@
+@import './themes.css';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.6;
+  transition: background 0.2s, color 0.2s;
+  min-height: 100vh;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-hover); }
+
+code, pre, .mono { font-family: var(--font-mono); }
+
+/* ── Layout primitives ─────────────────────────────────── */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.5rem;
+}
+
+/* ── Buttons ───────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 1rem;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--bg);
+}
+.btn-primary:hover { background: var(--accent-hover); }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--border);
+}
+.btn-ghost:hover { background: var(--bg-elevated); }
+
+/* ── Status badge ──────────────────────────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+}
+.badge.ok  { color: var(--success); border-color: var(--success); }
+.badge.err { color: var(--error);   border-color: var(--error); }
+
+/* ── Ping result block ─────────────────────────────────── */
+.response-block {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  white-space: pre-wrap;
+  color: var(--text);
+  min-height: 3rem;
+}
+
+/* ── Amber glow effect on interactive elements ─────────── */
+:root[data-theme="amber"] .btn,
+:root[data-theme="amber"] .card,
+:root[data-theme="amber"] .response-block {
+  box-shadow: 0 0 6px rgba(255,176,0,0.1);
+}
+:root[data-theme="amber"] .btn-primary {
+  box-shadow: 0 0 12px rgba(255,176,0,0.3);
+}
