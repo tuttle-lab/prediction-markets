@@ -16,7 +16,11 @@ dist-ssr
 .venv
 __pycache__
 *.pyc
+*.egg-info
 .env
+
+# Supabase local temp files
+supabase/.temp
 
 # Editor directories and files
 .vscode/*
@@ -28,3 +32,4 @@ __pycache__
 *.njsproj
 *.sln
 *.sw?
+.vercel

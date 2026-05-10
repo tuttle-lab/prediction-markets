@@ -1,6 +1,7 @@
 import httpx
 from datetime import datetime
 from ..models import Market, Contract
+from ..category import infer_category
 from .base import MarketSource
 
 BASE = "https://gamma-api.polymarket.com"
@@ -9,16 +10,16 @@ BASE = "https://gamma-api.polymarket.com"
 class PolymarketSource(MarketSource):
     name = "polymarket"
 
-    async def fetch(self) -> list[Market]:
+    async def _fetch(self, limit: int = 200) -> list[Market]:
         markets = []
         offset = 0
-        limit = 100
+        page_size = min(100, limit)
 
         async with httpx.AsyncClient(timeout=15) as client:
             while True:
                 r = await client.get(
                     f"{BASE}/markets",
-                    params={"active": "true", "closed": "false", "limit": limit, "offset": offset},
+                    params={"active": "true", "closed": "false", "limit": page_size, "offset": offset},
                 )
                 r.raise_for_status()
                 batch = r.json()
@@ -44,19 +45,32 @@ class PolymarketSource(MarketSource):
                     markets.append(Market(
                         id=str(m.get("id", m.get("slug", ""))),
                         title=m.get("question", m.get("title", "")),
-                        category=m.get("category", "general").lower(),
+                        category=infer_category(m.get("question") or m.get("title", "")),
                         source=self.name,
-                        url=f"https://polymarket.com/event/{m.get('slug', m.get('id', ''))}",
-                        contract=Contract(yes=round(yes, 4), no=round(no, 4), volume=m.get("volume")),
+                        url=_market_url(m),
+                        contract=Contract(
+                            yes=round(yes, 4),
+                            no=round(no, 4),
+                            volume=m.get("volumeNum"),
+                            liquidity=m.get("liquidityNum"),
+                        ),
                         closes_at=_parse_dt(m.get("endDate")),
                         raw=m,
                     ))
 
-                if len(batch) < limit:
+                if len(batch) < page_size or len(markets) >= limit:
                     break
-                offset += limit
+                offset += page_size
 
-        return markets
+        return markets[:limit]
+
+
+def _market_url(m: dict) -> str:
+    slug = m.get("slug") or str(m.get("id", ""))
+    events = m.get("events") or []
+    if events and events[0].get("ticker"):
+        return f"https://polymarket.com/event/{events[0]['ticker']}/{slug}"
+    return f"https://polymarket.com/event/{slug}"
 
 
 def _parse_dt(s: str | None) -> datetime | None:

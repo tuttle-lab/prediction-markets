@@ -7,6 +7,7 @@ class Contract:
     yes: float              # 0.0–1.0
     no: float               # 0.0–1.0
     volume: float | None = None
+    liquidity: float | None = None
 
 
 @dataclass

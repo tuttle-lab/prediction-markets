@@ -11,6 +11,7 @@ body {
   line-height: 1.6;
   transition: background 0.2s, color 0.2s;
   min-height: 100vh;
+  overflow-y: scroll; /* always show scrollbar gutter — prevents layout shift when accordion opens */
 }
 
 a { color: var(--accent); text-decoration: none; }
